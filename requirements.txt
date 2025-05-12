@@ -1,0 +1,6 @@
+faker
+pandas
+openpyxl
+mpyc
+gmpy2
+jupyter
