@@ -1,7 +1,8 @@
 from mpyc.runtime import mpc
 import pandas as pd
 import hashlib
-
+import os
+import sys
 def hash_id(id_str):
     """
     Convert a string to a 64-bit integer using a truncated SHA-256 hash.
@@ -15,6 +16,9 @@ def hash_id(id_str):
     
 
 async def main():
+    PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
+    if PROJECT_ROOT not in sys.path:
+      sys.path.insert(0, PROJECT_ROOT)
     """
     Secure Two-Party Record Matching using MPyC.
     
@@ -44,11 +48,11 @@ async def main():
     # === Load party-specific data ===
     if pid == 0:
         # Party 0: Load patient request data
-        df = pd.read_excel("source1-request-encounter.xlsx", sheet_name="narjiss-medication-request-2")
+        df = pd.read_excel("ICareData/source1-request-encounter.xlsx", sheet_name="narjiss-medication-request-2")
         my_ids = [hash_id(str(x)) for x in df["request_patient_md5"]]
     elif pid == 1:
         # Party 1: Load dispense data
-        df = pd.read_excel("source2-dispense.xlsx")
+        df = pd.read_excel("ICareData/source2-dispense.xlsx")
         my_ids = [hash_id(str(x)) for x in df["subject_id_md5"]]
     else:
         # Other parties contribute no data
