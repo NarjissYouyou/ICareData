@@ -17,4 +17,4 @@ python3 run_match.py -M2 -I0 --loopback &
 python3 run_match.py -M2 -I1 --loopback &
 
 wait
-echo "✅ MPC run complete."
+echo "MPC run complete."
